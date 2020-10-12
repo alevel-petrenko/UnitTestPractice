@@ -9,15 +9,16 @@ namespace TestNinja.Fundamentals
         
         public int CalculateDemeritPoints(int speed)
         {
-            if (speed < 0 || speed > MaxSpeed) 
+            if (speed < 0 || speed > MaxSpeed)
                 throw new ArgumentOutOfRangeException();
-            
-            if (speed <= SpeedLimit) return 0; 
-            
+
+            if (speed <= SpeedLimit) 
+                return 0;
+
             const int kmPerDemeritPoint = 5;
             var demeritPoints = (speed - SpeedLimit)/kmPerDemeritPoint;
 
             return demeritPoints;
-        }        
+        }
     }
 }
