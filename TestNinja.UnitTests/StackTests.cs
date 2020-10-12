@@ -44,7 +44,7 @@ namespace TestNinja.UnitTests
 			//
 			// Assert.
 			//
-			Assert.That(value, Is.EqualTo(stack.Peek()));
+			Assert.That(stack.Peek(), Is.EqualTo(value));
 		}
 
 		[Test]
@@ -53,13 +53,13 @@ namespace TestNinja.UnitTests
 			//
 			// Arrange.
 			//
-			int actualCount = 1;
+			int expectedCount = 1;
 
 			//
 			// Act.
 			//
 			stack.Push("a");
-			var expectedCount = stack.Count;
+			var actualCount = stack.Count;
 
 			//
 			// Assert.
@@ -82,13 +82,13 @@ namespace TestNinja.UnitTests
 			//
 			// Arrange.
 			//
-			string actual = "a";
+			string expected = "a";
 
 			//
 			// Act.
 			//
-			stack.Push(actual);
-			var expected = stack.Pop();
+			stack.Push(expected);
+			var actual = stack.Pop();
 
 			//
 			// Assert.
@@ -102,7 +102,7 @@ namespace TestNinja.UnitTests
 			//
 			// Arrange.
 			//
-			int actual = 1;
+			int expected = 1;
 
 			//
 			// Act.
@@ -110,7 +110,7 @@ namespace TestNinja.UnitTests
 			stack.Push("a");
 			stack.Push("a");
 			stack.Pop();
-			var expected = stack.Count;
+			var actual = stack.Count;
 
 			//
 			// Assert.
@@ -124,7 +124,7 @@ namespace TestNinja.UnitTests
 			//
 			// Arrange.
 			//
-			int actual = 2;
+			int expected = 2;
 
 			//
 			// Act.
@@ -132,7 +132,7 @@ namespace TestNinja.UnitTests
 			stack.Push("a");
 			stack.Push("a");
 			stack.Peek();
-			var expected = stack.Count;
+			var actual = stack.Count;
 
 			//
 			// Assert.
@@ -155,13 +155,13 @@ namespace TestNinja.UnitTests
 			//
 			// Arrange.
 			//
-			string actual = "a";
+			string expected = "a";
 
 			//
 			// Act.
 			//
-			stack.Push(actual);
-			var expected = stack.Peek();
+			stack.Push(expected);
+			var actual = stack.Peek();
 
 			//
 			// Assert.
