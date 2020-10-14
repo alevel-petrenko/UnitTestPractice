@@ -15,7 +15,7 @@
             
             // Some other work
 
-            return orderId; 
+            return orderId;
         }
     }
 

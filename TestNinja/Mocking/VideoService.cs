@@ -1,51 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
-using System.Linq;
 using Newtonsoft.Json;
 
 namespace TestNinja.Mocking
 {
-    public class VideoService
-    {
-        public string ReadVideoTitle()
-        {
-            var str = File.ReadAllText("video.txt");
-            var video = JsonConvert.DeserializeObject<Video>(str);
-            if (video == null)
-                return "Error parsing the video.";
-            return video.Title;
-        }
+	public class VideoService
+	{
+		private readonly IFileReader reader;
+		private readonly IVideoRepository repository;
 
-        public string GetUnprocessedVideosAsCsv()
-        {
-            var videoIds = new List<int>();
-            
-            using (var context = new VideoContext())
-            {
-                var videos = 
-                    (from video in context.Videos
-                    where !video.IsProcessed
-                    select video).ToList();
-                
-                foreach (var v in videos)
-                    videoIds.Add(v.Id);
+		public VideoService(IFileReader reader, IVideoRepository repository)
+		{
+			this.reader = reader;
+			this.repository = repository;
+		}
 
-                return String.Join(",", videoIds);
-            }
-        }
-    }
+		public string ReadVideoTitle()
+		{
+			var str = reader.ReadText("video.txt");
+			var video = JsonConvert.DeserializeObject<Video>(str);
 
-    public class Video
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public bool IsProcessed { get; set; }
-    }
+			if (video == null)
+				return "Error parsing the video.";
 
-    public class VideoContext : DbContext
-    {
-        public DbSet<Video> Videos { get; set; }
-    }
+			return video.Title;
+		}
+
+		public string GetUnprocessedVideosAsCsv()
+		{
+			var videoIds = new List<int>();
+
+			var videos = this.repository.GetUnprocessedVideos();
+
+			foreach (Video video in videos)
+				videoIds.Add(video.Id);
+
+			return String.Join(",", videoIds);
+		}
+	}
+}
+
+public class Video
+{
+	public int Id { get; set; }
+	public string Title { get; set; }
+	public bool IsProcessed { get; set; }
+}
+
+public class VideoContext : DbContext
+{
+	public DbSet<Video> Videos { get; set; }
 }
