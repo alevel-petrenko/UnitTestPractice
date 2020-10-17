@@ -50,7 +50,7 @@ namespace TestNinja.UnitTests.Mocking
 
 			var result = videoService.GetUnprocessedVideosAsCsv();
 
-			Assert.That(result, Is.EqualTo("1,2"));
+			Assert.That(result, Is.EqualTo("1,2,3"));
 		}
 	}
 }
