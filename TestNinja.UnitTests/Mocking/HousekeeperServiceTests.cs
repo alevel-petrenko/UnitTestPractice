@@ -80,8 +80,9 @@ namespace TestNinja.UnitTests.Mocking
 
 
 		[Test]
-		public void SendStatementEmails_EmailSendingFails_DisplayMessageBox(string name)
+		public void SendStatementEmails_EmailSendingFails_DisplayMessageBox()
 		{
+			statementGenerator.Setup(sg => sg.SaveStatement(housekeeper.Oid, housekeeper.FullName, statementDate)).Returns("name");
 			emailSender.Setup(sender => sender.EmailFile(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
 				.Throws<Exception>();
 
